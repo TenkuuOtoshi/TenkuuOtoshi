@@ -6,7 +6,7 @@
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 14:14:14 by tlarraze          #+#    #+#             */
-/*   Updated: 2022/06/24 15:27:01 by tlarraze         ###   ########.fr       */
+/*   Updated: 2022/06/24 17:22:28 by tlarraze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,22 +64,22 @@ int	use_key(int key, s_ptr *ptr)
 		ft_free(ptr);
 		exit(0);
 	}
-	if (key == XK_w)
+	if (key == XK_w || key == XK_Up)
 	{
 		if (ft_move(ptr, ptr->ph, ptr->pv - 48, 'w') == 1)
 			ft_last_move(ptr, ptr->ph, ptr->pv + 48);
 	}
-	if (key == XK_a)
+	if (key == XK_a || key == XK_Left)
 	{
 		if (ft_move(ptr, ptr->ph - 48, ptr->pv, 'a') == 1)
 			ft_last_move(ptr, ptr->ph + 48, ptr->pv);
 	}
-	if (key == XK_d)
+	if (key == XK_d || key == XK_Right)
 	{
 		if (ft_move(ptr, ptr->ph + 48, ptr->pv, 'd') == 1)
 			ft_last_move(ptr, ptr->ph - 48, ptr->pv);
 	}
-	if (key == XK_s)
+	if (key == XK_s|| key == XK_Down)
 	{
 		if (ft_move(ptr, ptr->ph, ptr->pv + 48, 's') == 1)
 			ft_last_move(ptr, ptr->ph, ptr->pv - 48);
