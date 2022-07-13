@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_utils.c                                         :+:      :+:    :+:   */
+/*   ft_utils_bonus.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 17:03:03 by tlarraze          #+#    #+#             */
-/*   Updated: 2022/07/11 15:23:08 by tlarraze         ###   ########.fr       */
+/*   Updated: 2022/07/11 16:39:57 by tlarraze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
+#include "so_long_bonus.h"
 
 char	ft_check_block(t_ptr *ptr, int h, int v)
 {
@@ -28,16 +28,18 @@ char	ft_check_block(t_ptr *ptr, int h, int v)
 
 int	ft_move(t_ptr *ptr, int h, int v, char c)
 {
+	ptr->p_side = c;
 	if (ft_check_block(ptr, h, v) != '1' && (ft_check_block(ptr, h, v)
-			!= 'E' || ptr->end != 0))
+			!= 'E' || ptr->end != 0) && ptr->death == 0)
 	{
 		mlx_put_image_to_window(ptr->mlx_ptr, ptr->win_ptr,
 			ft_move_img(ptr, h, v, c), h, v);
 		ptr->ph = h;
 		ptr->pv = v;
 		ptr->moves += 1;
-		ft_printf("Numbers of moves : %i\n", ptr->moves);
+		ft_write_moves(ptr);
 		ft_check_chest(ptr);
+		ft_check_death(ptr);
 		return (1);
 	}
 	ft_check_chest(ptr);
@@ -46,15 +48,15 @@ int	ft_move(t_ptr *ptr, int h, int v, char c)
 
 void	ft_last_move(t_ptr *ptr, int h, int v)
 {
-	if (ft_check_block(ptr, h, v) == 'P')
+	if (ft_check_block(ptr, h, v) == 'P' && ptr->death == 0)
 	{
 		ptr->map[h / 48][v / 48] = 'O';
-		printf("%c", ptr->map[h / 48][v / 48]);
 		mlx_put_image_to_window(ptr->mlx_ptr, ptr->win_ptr,
 			ptr->img_0_ptr, h, v);
 	}
-	mlx_put_image_to_window(ptr->mlx_ptr, ptr->win_ptr, ft_find_img
-		(ft_check_block(ptr, h, v), ptr, h / 48, v / 48), h, v);
+	if (ptr->death == 0)
+		mlx_put_image_to_window(ptr->mlx_ptr, ptr->win_ptr, ft_find_img
+			(ft_check_block(ptr, h, v), ptr, h / 48, v / 48), h, v);
 }
 
 void	ft_check_chest(t_ptr *ptr)
@@ -80,7 +82,21 @@ void	ft_check_chest(t_ptr *ptr)
 	if (c == 0)
 	{
 		ptr->end = 1;
-		mlx_put_image_to_window(ptr->mlx_ptr, ptr->win_ptr, ptr->img_eo1_ptr,
+		mlx_put_image_to_window(ptr->mlx_ptr, ptr->win_ptr, ptr->img_eo0_ptr,
 			ptr->eh, ptr->ev);
 	}
+}
+
+int	ft_exit_sprite(t_ptr *ptr)
+{
+	if (ptr->exit_state == 0 && ptr->end == 1 && ptr->death == 0)
+		mlx_put_image_to_window(ptr->mlx_ptr, ptr->win_ptr, ptr->img_eo0_ptr,
+			ptr->eh, ptr->ev);
+	if (ptr->exit_state == 2 && ptr->end == 1 && ptr->death == 0)
+		mlx_put_image_to_window(ptr->mlx_ptr, ptr->win_ptr, ptr->img_eo1_ptr,
+			ptr->eh, ptr->ev);
+	if (ptr->exit_state == 2)
+		ptr->exit_state = -1;
+	ptr->exit_state++;
+	return (0);
 }
