@@ -1,0 +1,91 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_itoa.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/04/12 14:02:55 by tlarraze          #+#    #+#             */
+/*   Updated: 2022/04/13 11:01:58 by tlarraze         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "libft.h"
+#include <stdio.h>
+
+static char	*shin_ft_strlcpy(char *dst, const char *src);
+size_t		ft_strlen(const char *s);
+
+char	*ft_itoa(int n)
+{
+	char	*ptr;
+	char	*tmp;
+	int		i;
+	int		neg;
+
+	i = 0;
+	if (n < 0)
+	{
+		neg = -1;
+		n = n * -1;
+	}
+	tmp = (char *)calloc(n, sizeof(char));
+	if (n == 0)
+	{
+		tmp[i] = '0';
+		return (tmp);
+	}
+	while (n > 0)
+	{
+		tmp[i] = n % 10 + '0';
+		n = n / 10;
+		i++;
+	}
+	tmp[i] = '\0';
+	ptr = (char *)calloc(ft_strlen(tmp), sizeof(char));
+	shin_ft_strlcpy(ptr, tmp);
+	if (neg < 0)
+	{
+		ptr[0] = '-';
+		return (ptr);
+	}
+	return (ptr + 1);
+}
+
+static char	*shin_ft_strlcpy(char *dst, const char *src)
+{
+	size_t	i;
+	size_t	i2;	
+
+	i = 1;
+	i2 = 0;
+	printf("%s", src);
+	while (src[i2] != '\0')
+		i2++;
+	i2--;
+	while (src[i] != '\0')
+	{
+		dst[i] = src[i2];
+		i++;
+		i2--;
+	}
+	dst[i] = '\0';
+	return (dst);
+}
+
+size_t	ft_strlen(const char *s)
+{
+	int	c;
+
+	c = 0;
+	while (s[c] != '\0')
+		c++;
+	return (c);
+}
+
+int	main(void)
+{
+	printf(" \n%s", ft_itoa(12));
+	printf("\n%s", ft_itoa(-12));
+	return (0);
+}
