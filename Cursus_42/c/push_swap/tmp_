@@ -1,0 +1,27 @@
+t_chain	*ft_big_while_2(t_chain *a, t_chain *b, int c)
+{
+	while (ft_count(a) != c)
+	{
+		b = ft_move_2_big(b, a);
+		a = ft_reset(a);
+		b = ft_push(b, a, 'a');
+		a = ft_reset(a);
+		if (a->pos > a->next->pos && b->next != NULL
+			&& b->pos < b->next->pos && ft_check_order(a) != 0)
+		{
+				a = ft_swap_first(a, 0);
+				b = ft_swap_first(b, 's');
+				a = ft_reset(a);
+				b = ft_reset(b);
+		}
+		else if (a->pos > a->next->pos && ft_check_order(a) != 0)
+			a = ft_swap_first(a, 'a');
+		if (ft_count(a) >= 3 && a->next->pos > a->next->next->pos)
+		{
+			a = ft_reverse_rotate(a, 'a');
+			a = ft_swap_first(a, 'a');
+			a = ft_rotate(a, 'a');
+		}
+	}
+	return (a);
+}

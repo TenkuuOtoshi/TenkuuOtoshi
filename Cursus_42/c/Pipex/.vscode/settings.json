@@ -1,0 +1,12 @@
+{
+    "files.associations": {
+        "libpip.h": "c",
+        "libpipb.h": "c",
+        "wait.h": "c",
+        "libft.h": "c",
+        "libpip_bonus.h": "c",
+        "stdio.h": "c",
+        "errno.h": "c",
+        "types.h": "c"
+    }
+}

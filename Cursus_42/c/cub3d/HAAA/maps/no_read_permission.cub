@@ -1,0 +1,8 @@
+
+EA ./path_east
+				SO 				./path_south
+														F 255,45,65
+	NO ./path_north				
+
+C 4,0,0
+	WE ./path_west

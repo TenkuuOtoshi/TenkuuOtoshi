@@ -1,0 +1,132 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_split.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tlarraze <tlarraze@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/04/06 17:32:09 by tlarraze          #+#    #+#             */
+/*   Updated: 2022/04/07 15:50:19 by tlarraze         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "libft.h"
+#include <stdio.h>
+
+char	*ft_ptrmake(const char *s, int si, char  *ptr, char c);
+void	ft_check(char **pt2, char c);
+int	ft_countC(const char *s, char c);
+size_t	ft_strlen(const char *s);
+
+char	**ft_split(char const *s, char c)
+{
+	char	*ptr;
+	char	**pt2;
+	int		si;
+	int		pi2;
+
+	pi2 = 0;
+	ptr = (char *)s;
+	si = 0;
+	pt2 = (char **)malloc(ft_countC(s, c) + ft_strlen(s) + 4  * sizeof(char));
+	if (pt2 == NULL)
+		return (0);
+	pt2[pi2] = ptr;
+	pi2++;
+	while(s[si])
+	{
+		if (s[si] == c)
+		{
+			pt2[pi2] = ft_ptrmake(s, si + 1, ptr, c);
+			pi2++;
+		}
+		si++;
+	}
+	ft_check(pt2, c);
+	si = 0;
+	while (pt2[si])
+	{
+		printf("%s\n", pt2[si]);
+		si++;
+	}
+	return (pt2);
+}
+
+void	ft_check(char **pt2, char c)
+{
+	int i;
+	int	j;
+
+	i = 0;
+	j = 0;
+	while (pt2[i])
+	{
+
+		while (pt2[i][j])
+		{
+			if (pt2[i][j] == c)
+				pt2[i][j] = '\0';
+			j++;
+		}
+		i++;
+	}
+}
+
+char	*ft_ptrmake(const char *s, int si, char  *ptr, char c)
+{
+	int	i;
+	char *cs;
+	
+	cs = (char *)s + si;
+	i = 0;
+	cs = (char *)malloc(ft_strlen(s + 1) * sizeof(char));
+	ptr = (char *)malloc(ft_strlen(s + 1) * sizeof(char));
+	while (cs[i] != '\0')
+	{
+		if (cs[i] == c)
+			cs[i] = '\0';
+		i++;
+	}
+	i = 0;
+	while (s[si] != '\0' && s[si] != c)
+	{
+		ptr[i] = cs[i];
+		i++;
+		si++;
+	}
+	return (ptr);
+}
+
+int	ft_countC(const char *s, char c)
+{
+	int	i;
+	int	count;
+
+	i = 1;
+	while (s[i])
+	{
+		if (s[i] == c)
+			count++;
+		i++;
+	}
+	return (count);
+}
+
+size_t	ft_strlen(const char *s)
+{
+	char	count;
+
+	count = 0;
+	while (*s != '\0')
+	{
+		count++;
+		s++;
+	}
+	return (count);
+}
+
+int	main(void)
+{
+	printf("%p", ft_split("STARTVTestVRebornVHelloVYOLOVEND", 'V'));
+	return (0);
+}

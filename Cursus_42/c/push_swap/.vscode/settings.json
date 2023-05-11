@@ -1,0 +1,8 @@
+{
+    "files.associations": {
+        "libps.h": "c",
+        "stdio.h": "c",
+        "libpsl.h": "c",
+        "libft.h": "c"
+    }
+}
