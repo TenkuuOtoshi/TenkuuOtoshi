@@ -1,6 +1,6 @@
 - 👋 Hi, I’m @TenkuuOtoshi
-- 👀 I’m interested in cryto/gaming
-- 🌱 I’m currently learning C
+- 👀 I’m interested in game dev
+- 🌱 I’m currently learning C++ / unreal engine
 - 💞️ I’m looking to collaborate on nothing at the moments
 - 📫 How to reach me theo.larraze@gmail.com
 
